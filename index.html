@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Bootstrap E-Commerce Kit-Fox</title>
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css" media="all">
+    <!-- <link rel="stylesheet" type="text/css" href="assets/css/simple-line-icons.css" media="all">
+    <link rel="stylesheet" type="text/css" href="assets/css/animate.css" media="all">
+    <link rel="stylesheet" type="text/css" href="assets/css/revslider.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/owl.theme.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/flexslider.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery.mobile-menu.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/jquery.bxslider.css">
+    <link rel="stylesheet" type="text/css" href="assets/css/style_inherit.css" media="all">
+    -->
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" media="all">
+
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700,800" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet">
+
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div id="app">
+  <!-- awak header -->
+  <header>
+    <!-- awal header container -->
+    <div class="header-container">
+      <!-- awal container -->
+      <div class="container">
+        <!-- awal row -->
+        <div class="row">
+          <!-- logo -->
+          <div class="col-lg-2 col-md-2 col-sm-3 col-xs-5 logo-block">
+            <div class="logo">
+                <a title="Pets Premium" href="index.html"><img alt="Pets Premium" src="assets/images/logo_wt.png"></a>
+            </div>
+          </div>
+          <!-- awal pencariqan -->
+          <div class="col-lg-6 col-md-6 col-sm-4 col-xs-3 hidden-xs category-search-form">
+            <div class="search-box">
+              <form id="search_mini_form" action="#" method="get">
+                <input id="search" type="text" name="q" placeholder="Search..." class="searchbox" maxlength="128">
+                <button type="submit" title="Search" class="search-btn-bg" id="submit-button"><span><i class="fa fa-search"></i></span></button>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-lg-4 col-md-4 col-sm-5 col-xs-7 pull-right">
+            <div class="toplinks">
+              <div class="links">
+                <div class="myaccount"><a title="My Account" href="login.html"><i class="fa fa-user"></i><span>My Account</span></a></div>
+                <div class="wishlist"><a title="Wishlist" href="wishlist.html"><i class="fa fa-heart"></i><span>Wishlist</span></a></div>
+                <div class="demo"><a title="Blog" href="blog.html"><i class="fa fa-commenting-o"></i><span>Blog</span></a></div>
+                <div class="login"><a title="Log In" href="login.html"><i class="fa fa-sign-in"></i><span>Log In</span></a></div>
+              </div>
+            </div>
+          </div>
+        <!-- akhir colom   -->
+        </div>
+      <!-- akhir container -->
+      </div>
+    <!-- akhir header container -->
+    </div>
+  <!-- akhir header   -->
+  </header>
+
+
+  <nav>
+    <div class="container">
+      <div class="row">
+        <div class="nav-inner col-lg-12">
+          <div class="mm-toggle-wrap">
+            <div class="mm-toggle">
+              <i class="icon-align-justify"></i>
+              <span class="mm-label">Menu</span>
+            </div>
+          </div>
+
+          <!-- <ul id="nav" class="hidden-xs">
+            <li class="level0 parent drop-menu active"><a href="#"><span>Home</span></a>
+            <ul class="level1">
+              <li class="level1 first parent"><a href="index.html"><span>Home Version 1</span></a></li>
+              <li class="level1 parent"><a href="index2.html"><span>Home Version 2</span></a></li>
+            </ul>
+            </li>
+          </ul> -->
+
+
+          <div class="menu_top">
+            <div class="top-cart-contain pull-right">
+              <div class="mini-cart">
+                <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle">
+                  <a href="#"><span class="hidden-xs">Shopping Cart </span><span v-if="charts.length>0" class="badge">{{charts.length}}</span></a>
+                </div>
+
+                <div class="top-cart-content" style="display: none;">
+                  <div class="block-subtitle">
+                    <div class="top-subtotal">
+                      {{charts.length}} items, <span class="price">Rp. {{totalBelanja}}</span>
+                    </div>
+                    <div class="pull-right">
+                      <button title="View Cart" class="view-cart" type="button"><span>View Cart</span></button>
+                    </div>
+                  </div>
+
+                  <ul class="mini-products-list" id="cart-sidebar">
+                    <!-- awal looping cart -->
+                    <li v-for='(chart, index) in charts' class="item ficdrst">
+                      <div class="item-inner">
+                        <a class="product-image" title="Full Sleeve Pink Jacket" href="#l">
+                          <img alt="Full Sleeve Pink Jacket" src="assets/products-images/product4.jpg">
+                        </a>
+                        <div class="product-details">
+                          <div class="access">
+                            <a class="btn-remove1" title="Remove This Item" v-on:click="deleteChart(index);">Remove</a>
+                            <a class="btn-edit" title="Edit item" href="#">
+                              <i class="icon-pencil"></i>
+                              <span class="hidden">Edit item</span>
+                            </a>
+                          </div>
+                          <strong>1</strong> x <span class="price">Rp.{{chart.harga}}</span>
+                          <p class="product-name"><a href="product_detail.html">{{chart.nama}}</a></p>
+                        </div>
+                      </div>
+                    <!-- akhir looping cart   -->
+                    </li>
+                  </ul>
+                  <div class="actions">
+                    <button class="btn-checkout" title="Checkout" type="button" data-toggle="modal" data-target="#myModal"><span>Checkout</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal checkout-->
+            <div id="myModal" class="modal fade" role="dialog">
+              <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Data barang yang dipilih.!</h4>
+                  </div>
+                  <div class="modal-body">
+                    <table class='table table-hover'>
+                      <thead>
+                        <tr>
+                          <th>Id</th>
+                          <th>Nama</th>
+                          <th>Harga</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr v-for='(brg, index) in charts'>
+                          <td>{{ brg.id }}</td>
+                          <td>{{ brg.nama }}</td>
+                          <td>{{ brg.harga }}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="modal-footer">
+                    <button class="btn btn-default" type="button" v-on:click="detil()">Bayar</button>
+                    <button class="btn btn-default" type="button" data-dismiss="modal">Batal</button>
+                  </div>
+                </div>
+              </div>
+            <!-- end modal checkout-->
+            </div>
+            <!-- end top -->
+          </div>
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+    <div class="container" >
+        <!-- awal row / 12 column -->
+        <div class="row">
+            <!-- awal col 3 left side bar -->
+            <div class="col-md-3">
+              <div>
+                  <a href="#" class="list-group-item active">Electronics </a>
+                  <ul class="list-group">
+                      <li class="list-group-item">Mobile
+                          <span class="label label-primary pull-right">234</span>
+                      </li>
+                      <li class="list-group-item">Computers
+                          <span class="label label-success pull-right">34</span>
+                      </li>
+                      <li class="list-group-item">Tablets
+                          <span class="label label-danger pull-right">4</span>
+                      </li>
+                      <li class="list-group-item">Appliances
+                          <span class="label label-info pull-right">434</span>
+                      </li>
+                      <li class="list-group-item">Games & Entertainment
+                          <span class="label label-success pull-right">34</span>
+                      </li>
+                  </ul>
+              </div>
+
+            </div>
+            <!-- akhir col 3 left side bar-->
+            <!-- awal 9 colomun content right bar -->
+            <div class="col-md-9">
+              <!-- awal jumbotron-->
+              <div class="jumbotron">
+                <h1>{{message}}</h1>
+                <p>
+                Belanja nyaman dan mudah.
+                </p>
+                 <p><a class="btn btn-primary btn-lg" role="button">PROMO HARI INI</a></p>
+              </div>
+              <!-- akhir jumbotron-->
+              <!-- awal breadcrum-->
+              <div>
+                  <ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Clothing</a></li>
+                    <li class="active">Men's Clothing</li>
+                  </ol>
+              </div>
+              <!-- akhir breadcrum-->
+              <!-- awal daftar list barang -->
+              <div class="row">
+                    <div  v-for='(barang, index) in barangs' class="col-md-4 text-center col-sm-6 col-xs-6">
+                        <div class="thumbnail">
+                            <img v-bind:src="barang.linkimage" alt="" />
+                            <div class="caption">
+                                <h4>{{barang.nama}}</h4>
+                                <p>{{barang.harga}}</p>
+                                <p>
+                                  <input class="btn btn-default" type="button" v-bind:value="valBtnChart" v-on:click="addToChart(barang)">
+                                  <input class="btn btn-default" type="button" v-bind:value="valBtnDetil" v-on:click="detil()">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+              <!-- akhir list barang -->
+
+              <!-- awal pagination-->
+              <div class="row">
+                    <ul class="pagination alg-right-pad">
+                        <li><a href="#">&laquo;</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
+              </div>
+              <!-- akhir pagination -->
+        </div>
+        <!-- akhir 9 colomun content right bar -->
+      </div>
+      <!-- akhir row / 12 column -->
+    </div>
+    <!-- /.container -->
+
+
+    <!--awal F=footer -->
+    <div class="col-md-12 end-box ">
+        &copy; 2014 | &nbsp; All Rights Reserved | &nbsp; Your Company Name
+    </div>
+    <!-- akhir footer -->
+
+  </div>
+
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          message: 'E-Warung',
+          valBtnChart: 'Add To Chart',
+          valBtnDetil : 'Detil',
+          showLorem: false,
+          barangs: [
+            {id: 0, nama: 'Laptop', harga: 5000000, linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'},
+            {id: 1, nama: 'Iphone', harga: 4500000,linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'},
+            {id: 2, nama: 'Android', harga: 25000,linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'},
+            {id: 3, nama: 'Televisi', harga: 7500000,linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'},
+            {id: 4, nama: 'Kamera', harga: 6000000,linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'},
+            {id: 5, nama: 'Ps3', harga: 700000,linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'}
+          ],
+          charts:[],
+          totalBelanja:0,
+          err: false,
+          errMsg: ''
+        },
+        methods: {
+          addToChart(objBrg) {
+            let newBrg = objBrg;
+            if(this.isKeranjangAda(newBrg)){
+              this.charts.push(newBrg);
+              this.sumKeranjangBelanja(this.charts);
+            }else{
+                    alert('data sudah ada');
+            }
+          },
+          deleteChart(index) {
+            this.charts.splice(index, 1);
+            this.sumKeranjangBelanja(this.charts);
+          },
+          sumKeranjangBelanja(objBelanja){
+            let totHarga=0;
+            objBelanja.forEach(brg=>{
+                totHarga=totHarga+Number(brg.harga)
+            })
+            this.totalBelanja=totHarga;
+          },
+          isKeranjangAda(objBrg){
+            let isada = true;
+            this.charts.forEach(brg=>{
+                if(objBrg.id===brg.id){
+                  isada=false;
+                  this.err=true;
+                  this.errMsg="Daftar belanja sudah ada !"
+                }
+            })
+            return isada;
+          }
+        },
+
+        // mounted:  // udah selesai dipasang di web ui
+        // created: // udah jadi tapi belum ditampilkan
+        // created () {
+        //   axios.get('https://swapi.co/api/people')
+        //   .then(response => {
+        //     console.log(response.data.results);
+        //     this.students = response.data.results
+        //   })
+        //   .catch(err => {console.log(err);})
+        // }
+
+      })
+    </script>
+
+
+    <script type="text/javascript" src="assets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="assets/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-2.1.4.js" type="text/javascript"></script>
+
+    <!-- <script type="text/javascript" src="assets/js/parallax.js"></script> -->
+    <!-- <script type="text/javascript" src="assets/js/revslider.js"></script> -->
+    <script type="text/javascript" src="assets/js/common.js"></script>
+    <script type="text/javascript" src="assets/js/owl.carousel.min1.js"></script>
+    <script type="text/javascript" src="assets/js/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="assets/js/jquery.mobile-menu.min.js"></script>
+    <!-- <script type="text/javascript" src="assets/js/countdown.js"></script> -->
+    <!-- <script type="text/javascript" src="assets/js/jquery.bxslider.min.js"></script> -->
+    <!-- <script type="text/javascript" src="assets/js/js-functions.js"></script> -->
+    <!-- <script type="text/javascript" src="assets/js/js-index.js"></script> -->
+
+</body>
+</html>

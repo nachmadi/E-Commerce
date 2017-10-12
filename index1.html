@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Bootstrap E-Commerce Kit-Fox</title>
+    <!-- Bootstrap core CSS -->
+    <link href="assets/css/bootstrap.css" rel="stylesheet">
+     <!-- custom CSS here -->
+    <link href="assets/css/style.css" rel="stylesheet" />
+
+    <script src="https://unpkg.com/vue"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-default" role="navigation">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">LOGO</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">Login</a></li>
+                    <li><a href="#">Signup</a></li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">24x7 Support <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#"><strong>Mail: </strong>warungOnline@gmail.com</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#"><strong>Address: </strong>
+                                <div>
+                                    234, Pondok indah,<br />
+                                    Jakarta, INA
+                                </div>
+                            </a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <span class="glyphicons glyphicons-cart-out"></span>
+                <form class="navbar-form navbar-right" role="search">
+                    <div class="form-group">
+                        <input type="text" placeholder="Enter Keyword Here ..." class="form-control">
+                    </div>
+                    &nbsp;
+                    <button type="submit" class="btn btn-default">Search</button>
+                </form>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+    <div class="container" id="app">
+        <!-- awal row / 12 column -->
+        <div class="row">
+            <!-- awal col 3 left side bar -->
+            <div class="col-md-3">
+              <div>
+                  <li><a href="#">Inbox <span class="badge">{{charts.length}}</span></a></li>
+                  <a href="#" class="list-group-item active">Electronics </a>
+                  <ul class="list-group">
+                      <li class="list-group-item">Mobile
+                          <span class="label label-primary pull-right">234</span>
+                      </li>
+                      <li class="list-group-item">Computers
+                          <span class="label label-success pull-right">34</span>
+                      </li>
+                      <li class="list-group-item">Tablets
+                          <span class="label label-danger pull-right">4</span>
+                      </li>
+                      <li class="list-group-item">Appliances
+                          <span class="label label-info pull-right">434</span>
+                      </li>
+                      <li class="list-group-item">Games & Entertainment
+                          <span class="label label-success pull-right">34</span>
+                      </li>
+                  </ul>
+              </div>
+
+              <div>
+                  <a href="#" class="list-group-item active">Kerajang Belanja </a>
+                  <!-- <div class="alert alert-warning" role="alert"></div> -->
+                  <b-modal id="modalsm" size="sm" title="Small Modal">
+                    {{errMsg}}
+                  </b-modal>
+                  <ul class="list-group">
+                      <li v-for='(chart, index) in charts' class="list-group-item">
+                          {{chart.nama}}
+                          <span class="label label-primary pull-right">{{chart.harga}} <a class="label label-primary" v-on:click="deleteChart(index);">HAPUS</a></span>
+                      </li>
+
+                      <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Check Out</button>
+                      {{totalBelanja}}
+
+                      <!-- Modal -->
+                      <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                          <!-- Modal content-->
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal">&times;</button>
+                              <h4 class="modal-title">Data barang yang dipilih.!</h4>
+                            </div>
+                            <div class="modal-body">
+                              <table class='table table-hover'>
+                                <thead>
+                                  <tr>
+                                    <th>Id</th>
+                                    <th>Nama</th>
+                                    <th>Harga</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr v-for='(brg, index) in charts'>
+                                    <td>{{ brg.id }}</td>
+                                    <td>{{ brg.nama }}</td>
+                                    <td>{{ brg.harga }}</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn btn-success" type="button" v-on:click="detil()">Bayar</button>
+                              <button class="btn btn-default" type="button" data-dismiss="modal">Batal</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+
+
+
+
+
+
+
+
+
+
+                  </ul>
+              </div>
+            </div>
+            <!-- akhir col 3 left side bar-->
+            <!-- awal 9 colomun content right bar -->
+            <div class="col-md-9">
+              <!-- awal jumbotron-->
+              <div class="jumbotron">
+                <h1>{{message}}</h1>
+                <p>
+                Belanja nyaman dan mudah.
+                </p>
+                 <p><a class="btn btn-primary btn-lg" role="button">PROMO HARI INI</a></p>
+              </div>
+              <!-- akhir jumbotron-->
+              <!-- awal breadcrum-->
+              <div>
+                  <ol class="breadcrumb">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Clothing</a></li>
+                    <li class="active">Men's Clothing</li>
+                  </ol>
+              </div>
+              <!-- akhir breadcrum-->
+              <!-- awal daftar list barang -->
+              <div class="row">
+                    <div  v-for='(barang, index) in barangs' class="col-md-4 text-center col-sm-6 col-xs-6">
+                        <div class="thumbnail">
+                            <img v-bind:src="barang.linkimage" alt="" />
+                            <div class="caption">
+                                <h4>{{barang.nama}}</h4>
+                                <p>{{barang.harga}}</p>
+                                <p>
+                                  <input class="btn btn-primary" type="button" v-bind:value="valBtnChart" v-on:click="addToChart(barang)">
+                                  <input class="btn btn-success" type="button" v-bind:value="valBtnDetil" v-on:click="detil()">
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+              <!-- akhir list barang -->
+
+              <!-- awal pagination-->
+              <div class="row">
+                    <ul class="pagination alg-right-pad">
+                        <li><a href="#">&laquo;</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
+              </div>
+              <!-- akhir pagination -->
+        </div>
+        <!-- akhir 9 colomun content right bar -->
+      </div>
+      <!-- akhir row / 12 column -->
+    </div>
+    <!-- /.container -->
+
+
+    <!--awal F=footer -->
+    <div class="col-md-12 end-box ">
+        &copy; 2014 | &nbsp; All Rights Reserved | &nbsp; Your Company Name
+    </div>
+    <!-- akhir footer -->
+
+    <!--SCRIPTS AT THE BOOTOM TO DECREASE LOAD TIME-->
+    <!--jQUERY FILES-->
+    <script src="assets/js/jquery-1.10.2.js"></script>
+    <!--BOOTSTRAP  FILES-->
+    <script src="assets/js/bootstrap.min.js"></script>
+
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          message: 'E-Warung',
+          valBtnChart: 'Add To Chart',
+          valBtnDetil : 'Detil',
+          showLorem: false,
+          barangs: [
+            {id: 0, nama: 'Laptop', harga: 5000000, linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'},
+            {id: 1, nama: 'Iphone', harga: 4500000,linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'},
+            {id: 2, nama: 'Android', harga: 25000,linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'},
+            {id: 3, nama: 'Televisi', harga: 7500000,linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'},
+            {id: 4, nama: 'Kamera', harga: 6000000,linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'},
+            {id: 5, nama: 'Ps3', harga: 700000,linkimage:'http://127.0.0.1:8080/assets/img/dummy.jpg'}
+          ],
+          charts:[],
+          totalBelanja:0,
+          err: false,
+          errMsg: ''
+        },
+        methods: {
+          addToChart(objBrg) {
+            let newBrg = objBrg;
+            if(this.isKeranjangAda(newBrg)){
+              this.charts.push(newBrg);
+              this.sumKeranjangBelanja(this.charts);
+            }
+          },
+          deleteChart(index) {
+            this.charts.splice(index, 1);
+            this.sumKeranjangBelanja(this.charts);
+          },
+          sumKeranjangBelanja(objBelanja){
+            let totHarga=0;
+            objBelanja.forEach(brg=>{
+                totHarga=totHarga+Number(brg.harga)
+            })
+            this.totalBelanja=totHarga;
+          },
+          isKeranjangAda(objBrg){
+            let isada = true;
+            this.charts.forEach(brg=>{
+                if(objBrg.id===brg.id){
+                  isada=false;
+                  this.err=true;
+                  this.errMsg="Daftar belanja sudah ada !"
+                }
+            })
+            return isada;
+          }
+        },
+
+        // mounted:  // udah selesai dipasang di web ui
+        // created: // udah jadi tapi belum ditampilkan
+        // created () {
+        //   axios.get('https://swapi.co/api/people')
+        //   .then(response => {
+        //     console.log(response.data.results);
+        //     this.students = response.data.results
+        //   })
+        //   .catch(err => {console.log(err);})
+        // }
+
+      })
+    </script>
+</body>
+</html>
